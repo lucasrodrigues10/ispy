@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>iSpy - Conhecimento é Tudo!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/grayscale.min.css" rel="stylesheet">
+
+    <!-- CSS para datatables -->
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">iSpy</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#about">Sobre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#projects">Dados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#signup">E-Mail</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Header -->
+<header class="masthead">
+    <div class="container d-flex h-100 align-items-center">
+        <div class="mx-auto text-center">
+            <h1 class="mx-auto my-0 ">iSpy</h1>
+            <h2 class="text-white-50 mx-auto mt-2 mb-5">Saiba de tudo remotamente.</h2>
+            <a href="#about" class="btn btn-primary js-scroll-trigger">Comece Agora</a>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="about" class="about-section text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="text-white mb-4">Desenvolvido com Raspberry Pi, Grove Pi, Flask e Bootstrap.</h2>
+                <p class="text-white-50">iSpy foi realizado como um trabalho para a matéria de Internet das Coisas.
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-3">
+                <img src="static/img/rpi.png" class="img-fluid">
+            </div>
+            <div class="col-3">
+                <img src="static/img/grovepi.png" class="img-fluid">
+            </div>
+            <div class="col-3">
+                <img src="static/img/flask.png" class="img-fluid">
+            </div>
+            <div class="col-3">
+                <img src="static/img/bootstrap.png" class="img-fluid">
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+        <!--<img src="static/img/ipad.png" class="img-fluid" alt="" style="max-width: 60%">-->
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="projects-section bg-light">
+    <div class="container">
+
+        <table id="myTable" class="display">
+            <thead>
+            <tr>
+                <th>Local</th>
+                <th>Data</th>
+                <th>Horário</th>
+                <th>Luz Acessa</th>
+                <th>Presença</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Quarto</td>
+                <td>12 de Agosto de 2018</td>
+                <td>12:00</td>
+                <td>Sim</td>
+                <td>Sim</td>
+            </tr>
+            <tr>
+                <td>Sala</td>
+                <td>13 de Agosto de 2018</td>
+                <td>14:00</td>
+                <td>Não</td>
+                <td>Não</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+
+        <!-- Featured Project Row -->
+        <div class="row align-items-center no-gutters mb-4 mb-lg-5">
+            <div class="col-xl-8 col-lg-7">
+                <img class="img-fluid mb-3 mb-lg-0" src="static/img/maua.png" alt="">
+            </div>
+            <div class="col-xl-4 col-lg-5">
+                <div class="featured-text text-center text-lg-left">
+                    <h4>Instituto Mauá de Tecnologia</h4>
+                    <p class="text-black-50 mb-0">O projeto foi realizado no Instituto Mauá de Tecnologia no curso de Engenharia da Computação.</p>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+<!-- Signup Section -->
+<section id="signup" class="signup-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto text-center">
+
+                <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
+                <h2 class="text-white mb-5">Envie os dados por e-mail!</h2>
+
+                <form class="form-inline d-flex" method="POST" action="/email">
+                    <input type="email" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="email"
+                           placeholder="Digite seu e-mail" name="email">
+
+                    <button type="submit" class="btn btn-primary mx-auto">
+                        Enviar
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section bg-black">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-map-marked-alt text-primary mb-2"></i>
+                        <h4 class="text-uppercase m-0">Endereço</h4>
+                        <hr class="my-4">
+                        <div class="small text-black-50">Praça Mauá, 1 - Mauá, São Caetano do Sul - SP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-envelope text-primary mb-2"></i>
+                        <h4 class="text-uppercase m-0">Email</h4>
+                        <hr class="my-4">
+                        <div class="small text-black-50">
+                            <a href="#">lucasrodrigues10@outlook.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="card py-4 h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-mobile-alt text-primary mb-2"></i>
+                        <h4 class="text-uppercase m-0">Telefone</h4>
+                        <hr class="my-4">
+                        <div class="small text-black-50">(11)5555-0000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="social d-flex justify-content-center">
+            <a href="#" class="mx-2">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="mx-2">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="mx-2">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black small text-center text-white-50">
+    <div class="container">
+        Copyright &copy; iSpy 2018
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="static/vendor/jquery/jquery.min.js"></script>
+<script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for this template -->
+<script src="static/js/grayscale.min.js"></script>
+
+<!-- JS para datatables -->
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json'
+            }
+
+        });
+
+    });
+</script>
+
+</body>
+
+</html>
