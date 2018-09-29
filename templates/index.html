@@ -259,6 +259,100 @@
     });
 </script>
 
+<!-- Script pegar info do Grove PI -->
+
+<script type="text/javascript"
+	src="static/js/socket.io.slim.js "></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+<script type="text/javascript">
+	/*dados = [{
+		{
+			'tempo' : 10,
+			'temperatura': 25 
+		},
+		{
+			'tempo' : 20,
+			'temperatura': 50 
+		}
+	}]*/
+	dataPoints_temp = [];
+	dataPoints_hum = [];
+	var chart_temp;
+	var chart_hum;
+	$(document).ready( function(){
+		var socket = io.connect("http://"+ document.domain +":5000/monitor");
+		
+		socket.on("dht_measure", function(data) {
+			$("#temp").html(data.temp);
+			$("#hum").html(data.hum);
+			$("#tempo").html(data.tempo);
+			console.log("recebeu do RPi")	
+			console.log(data.hum)	
+			dataPoints_temp.push({x: data.tempo, y: parseInt(data.temp)});
+			chart_temp.render();
+			dataPoints_hum.push({x: data.tempo, y: parseInt(data.hum)});
+			chart_hum.render();
+			
+		})
+	})
+
+	window.onload = function () {
+			chart_temp = new CanvasJS.Chart("chart_temp", {
+			title:{
+				text: "Temperatura x Tempo"              
+			},
+			data: [              
+			{
+				// Change type to "doughnut", "line", "splineArea", etc.
+				type: "line",
+				dataPoints: dataPoints_temp
+			}
+			],
+
+		});
+
+		chart_hum = new CanvasJS.Chart("chart_hum", {
+			title:{
+				text: "Umidade x Tempo"              
+			},
+			data: [              
+			{
+				// Change type to "doughnut", "line", "splineArea", etc.
+				type: "line",
+				dataPoints: dataPoints_hum
+			}
+			]
+		});
+	}
+	/*
+
+			chart_hum = new CanvasJS.Chart("chart_temp", {
+			title:{
+				text: "Umidade x Tempo"              
+			},
+			data: [              
+			{
+				// Change type to "doughnut", "line", "splineArea", etc.
+				type: "line",
+				dataPoints: dataPoints_hum
+			}
+			]
+		});
+	
+	*/
+	
+
+
+
+</script>
+	
+
 </body>
 
 </html>

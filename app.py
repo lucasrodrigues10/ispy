@@ -1,8 +1,21 @@
+from gevent import monkey
+monkey.patch_all()
+from flask_socketio import SocketIO
 from flask import Flask, render_template, request
+from time import sleep
+from time import strftime
+from threading import Thread, Event
+from grovepi import *
+import threading
+import time
 from flask_mail import Mail, Message
 
+__author__ = 'tio levon'
+
+#configuracao do servidor
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'pinkguy'
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'fsociety3141@gmail.com'
@@ -11,6 +24,30 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 mail = Mail(app)
+
+# Grove PI
+socketio = SocketIO(app)
+global data_total
+def monitor_presenca():
+	while dht_event.is_set():
+		delay=1
+		[temp,hum] = dht(2,0)
+		print("Temperatura: ",temp)
+		
+		data = {
+			'temp' : temp,
+			'hum' : hum,
+			'tempo':  round(time.time() % 60,1)
+		}
+		
+		'''
+		data['tempo'].append(round(time.time() % 60,1))
+		data['temp'].append(temp)
+		data['hum'].append(hum)
+		'''
+		print(data)
+		socketio.emit('dht_measure', data, namespace='/monitor')
+		sleep(delay)
 
 
 @app.route("/email", methods=['GET', 'POST'])
@@ -31,4 +68,24 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	try:
+		dht_event= Event()
+		dht_event.set()
+
+		dht_thread = threading.Thread(target= monitor_presenca)
+		dht_thread.start()
+
+	        print('Iniciando servidor na porta 5000.')
+		socketio.run(app, debug=True, host='0.0.0.0')
+		while True:
+			pass
+	except:
+		dht_event.clear()
+		dht_thread.join()
+	finally:
+		print('Desligando...')
+		if dht_thread.isAlive():
+			thread_stop_event.clear()
+            		dht_thread.join()
+		print('Servidor terminado.')	
+    #app.run(debug=True)
