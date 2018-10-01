@@ -31,13 +31,15 @@ global data_total
 def monitor_presenca():
 	while dht_event.is_set():
 		delay=1
-		[temp,hum] = dht(2,0)
-		print("Temperatura: ",temp)
+		dist = ultrasonicRead(7) #sensor na porta 7
+		presenca = False;   		
 		
+		if (dist <= 130):
+			presenca = True
+
 		data = {
-			'temp' : temp,
-			'hum' : hum,
-			'tempo':  round(time.time() % 60,1)
+			'dist' : dist,
+			'presenca':presenca
 		}
 		
 		'''
@@ -45,7 +47,7 @@ def monitor_presenca():
 		data['temp'].append(temp)
 		data['hum'].append(hum)
 		'''
-		print(data)
+		print('Tem Alguem??: ',presenca,'Distancia:  ',dist)
 		socketio.emit('dht_measure', data, namespace='/monitor')
 		sleep(delay)
 
