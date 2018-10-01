@@ -9,6 +9,7 @@ from grovepi import *
 import threading
 import time
 from flask_mail import Mail, Message
+from grove_rgb_lcd import *
 
 __author__ = 'tio levon'
 
@@ -64,6 +65,11 @@ def email():
         return "Get-Error"
 
 
+@app.route("/escreve/<text>", methods=['GET', 'POST'])
+def write(text):
+	setText(text)
+	return 'Sent'
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -76,6 +82,9 @@ if __name__ == '__main__':
 
 		dht_thread = threading.Thread(target= monitor_presenca)
 		dht_thread.start()
+
+		setRGB(255,255,255)
+		#setText('LCD ta funfano meo!')
 
 	        print('Iniciando servidor na porta 5000.')
 		socketio.run(app, debug=True, host='0.0.0.0')
