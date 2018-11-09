@@ -29,15 +29,22 @@ mail = Mail(app)
 # Grove PI
 socketio = SocketIO(app)
 global data_total
+global flag_msg
+flag_msg = False
 def monitor_presenca():
+	global flag_msg
+
 	while dht_event.is_set():
 		delay=1
-		dist = ultrasonicRead(7) #sensor na porta 7
+		
+		dist = ultrasonicRead(8) #sensor na porta 7
+		
 		presenca = False;   		
 		
 		if (dist <= 130):
 			presenca = True
-
+			flag_msg = True
+		
 		data = {
 			'dist' : dist,
 			'presenca':presenca
@@ -49,15 +56,25 @@ def monitor_presenca():
 		data['hum'].append(hum)
 		'''
 		print('Tem Alguem??: ',presenca,'Distancia:  ',dist)
+		#print('Rodando thread')
 		socketio.emit('dht_measure', data, namespace='/monitor')
 		sleep(delay)
+		
 
+def envia_msg():	
+	global flag_msg
+	print('vendo se ativou...')
+	if flag_msg==True:
+			setText('teste')
+			print("ATIVOU")
+			#avisar usuario e receber mensagem do usuario aqui
+	sleep(delay)
 
 @app.route("/email", methods=['GET', 'POST'])
 def email():
     if request.method == 'POST':
         email_str = request.form['email']
-        msg = Message('Hello', sender='fsociety3141@gmail.com', recipients=[email_str])
+        msg = Message('Hello', sender='fsociety3141@mail.com', recipients=[email_str])
         msg.body = "This is the email body"
         mail.send(msg)
         return 'Sent'
@@ -67,8 +84,11 @@ def email():
 
 @app.route("/escreve/<text>", methods=['GET', 'POST'])
 def write(text):
-	setText(text)
-	return 'Sent'
+	if flag_msg==True:
+		setText(text)
+		return 'Sent'
+	else: 
+		return 'nao permitido'
 
 @app.route('/')
 def index():
@@ -79,24 +99,39 @@ if __name__ == '__main__':
 	try:
 		dht_event= Event()
 		dht_event.set()
-
+		
+		#msg_event = Event()
+		
 		dht_thread = threading.Thread(target= monitor_presenca)
+
 		dht_thread.start()
 
 		setRGB(255,255,255)
-		#setText('LCD ta funfano meo!')
+		setText('iniciado a monitoracao')
 
 	        print('Iniciando servidor na porta 5000.')
 		socketio.run(app, debug=True, host='0.0.0.0')
+				
+
 		while True:
 			pass
-	except:
-		dht_event.clear()
-		dht_thread.join()
+	except :
+		pass
 	finally:
 		print('Desligando...')
+		dht_event.clear()	
+		
+		dht_thread.join()
+		'''
 		if dht_thread.isAlive():
 			thread_stop_event.clear()
             		dht_thread.join()
+
+		if lcd_thread.isAlive():
+			thread_stop_event.clear()
+
+            		lcd_thread.join()
+		'''
+		setText('')
 		print('Servidor terminado.')	
     #app.run(debug=True)
