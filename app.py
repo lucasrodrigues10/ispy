@@ -57,7 +57,7 @@ def monitor_presenca():
 		'''
 		print('Tem Alguem??: ',presenca,'Distancia:  ',dist)
 		#print('Rodando thread')
-		socketio.emit('dht_measure', data, namespace='/monitor')
+		socketio.emit('presenca', data, namespace='/monitor')
 		sleep(delay)
 		
 
@@ -81,9 +81,9 @@ def email():
     else:
         return "Get-Error"
 
-
-@app.route("/escreve/<text>", methods=['GET', 'POST'])
+@socketio.on('texto',namespace='/monitor')
 def write(text):
+	print ("Dados recebidos: "  + text)
 	if flag_msg==True:
 		setText(text)
 		return 'Sent'
