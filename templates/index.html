@@ -100,14 +100,18 @@
 <!-- Projects Section -->
 <section id="projects" class="projects-section bg-light">
     <div class="container">
+	<div class="form-group">
+	  <label for="lcd">LCD:</label>
+	  <input type="text" class="form-control" id="lcd">
+	</div>
 
-        <table id="myTable" class="display">
+        <table id="tabela" class="display">
             <thead>
             <tr>
                 <th>Local</th>
                 <th>Data</th>
                 <th>Horário</th>
-                <th>Luz Acessa</th>
+
                 <th>Presença</th>
             </tr>
             </thead>
@@ -117,13 +121,11 @@
                 <td>12 de Agosto de 2018</td>
                 <td>12:00</td>
                 <td>Sim</td>
-                <td>Sim</td>
             </tr>
             <tr>
                 <td>Sala</td>
                 <td>13 de Agosto de 2018</td>
                 <td>14:00</td>
-                <td>Não</td>
                 <td>Não</td>
             </tr>
             </tbody>
@@ -290,10 +292,16 @@
 		
 		socket.on("presenca", function(data) {		
 			console.log("recebeu do RPi")	
-			console.log(data)			
+			console.log(data)
+			dt = new Date()
+			$('#tabela tr:last').after('<tr> <td>H204</td>  <td>'  +  '10 de Novembro de 2018</td>   <td> '+dt.getHours() + ':' + dt.getMinutes() + '</td>        <td>' +data.presenca +'</td>          </tr>')	
+texto_lcd = $('#lcd').val()
+		//alert(texto_lcd)
+		socket.emit("texto", texto_lcd)	
+			
 		})
 		
-		socket.emit("texto", "Jade Kush")
+		
 	
 	})
 
