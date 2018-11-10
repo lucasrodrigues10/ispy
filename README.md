@@ -14,8 +14,6 @@
 
 # [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/Tiagoeem/embarcados-Diurno/tree/LucasRodrigues_14005565/awesome)
 
-[![Github-Release](https://img.shields.io/github/release/filoe/cscore.svg)](https://github.com/lucasrodrigues10/ispy/releases)
-
 ## Descrição
 
 Projeto que permite o usuário manter-se informado sobre as condições de um local.
