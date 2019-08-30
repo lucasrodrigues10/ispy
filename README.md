@@ -16,7 +16,7 @@
 
 ## Descrição
 
-Projeto que permite o usuário manter-se informado sobre as condições de um local.
+Projeto que permite o usuário exibir uma mensagem casa alguém seja detectado pelo RaspPi
 
 ## Integrantes do Projeto
 * **Lucas de Moura Rodrigues** - *14.00556-5*
